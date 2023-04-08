@@ -2,6 +2,8 @@
 
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const webpack = require("webpack");
+require("dotenv").config({ path: "./.env" });
 
 const isProduction = process.env.NODE_ENV == "production";
 
@@ -23,6 +25,18 @@ const config = {
 
     // Add your plugins here
     // Learn more about plugins from https://webpack.js.org/configuration/plugins/
+    new webpack.ProvidePlugin({
+      // Make a global `process` variable that points to the `process` package,
+      // because the `util` package expects there to be a global variable named `process`.
+      // Thanks to https://stackoverflow.com/a/65018686/14239942
+      process: "process/browser",
+    }),
+    new webpack.EnvironmentPlugin({
+      NODE_ENV: process.env.NODE_ENV,
+    }),
+    // new webpack.DefinePlugin({
+    //   "process.env": JSON.stringify(process.env),
+    // }),
   ],
   module: {
     rules: [
