@@ -32,7 +32,7 @@ const config = {
       process: "process/browser",
     }),
     new webpack.EnvironmentPlugin({
-      NODE_ENV: process.env.NODE_ENV,
+      WEBPACK_GCP_YOUTUBE_API: process.env.GCP_YOUTUBE_API,
     }),
     // new webpack.DefinePlugin({
     //   "process.env": JSON.stringify(process.env),
