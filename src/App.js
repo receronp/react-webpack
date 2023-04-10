@@ -8,14 +8,15 @@ const App = () => {
   const [videos, setVideos] = useState([]);
   const [selectedVideo, setSelectedVideo] = useState(null);
 
+  const videoSearch = async (term) => {
+    const res = await youtubeApi.get("/search", {
+      params: { q: term },
+    });
+    setVideos(res.data.items);
+  };
+
   useEffect(() => {
-    const search = async () => {
-      const res = await youtubeApi.get("/search", {
-        params: { q: "surfboards" },
-      });
-      setVideos(res.data.items);
-    };
-    search();
+    videoSearch("surfboards");
   }, []);
 
   useEffect(() => {
@@ -24,7 +25,7 @@ const App = () => {
 
   return (
     <div className="App">
-      <SearchBar />
+      <SearchBar onSearchTermChange={(term) => videoSearch(term)} />
       <VideoDetail video={selectedVideo} />
       <VideoList
         videos={videos}
